@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 JobScheduler scheduler = JobScheduler.getInstance(getBaseContext());
 
+                //cancels all JobIds
                 scheduler.cancelAll();
                 Log.e("Job cancel","job"+scheduler);
 
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
+
+                //convert for milliseconds
                 String segundos = (edtSegundos.getText().toString());
                 long segConvertido = TimeUnit.SECONDS.toMillis(Integer.parseInt(segundos));
                 Log.e("SegundosConvertido",""+segConvertido);
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
                 JobInfo.Builder builder = new JobInfo.Builder(count, componentName);
 
-                builder.setPersisted(true)
+                builder.setPersisted(true)  //even restarting the mobile phone the job continues
                         .setBackoffCriteria(5000, JobInfo.BACKOFF_POLICY_LINEAR)
                         .setPeriodic(segConvertido);
 
